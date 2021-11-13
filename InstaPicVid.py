@@ -180,7 +180,7 @@ def home():
     f1=Frame(bg="#ECE5F0")
     f1.place(width=800, height=500)
 
-    des=ttk.Label(f1, background="#ECE5F0" , text="Download Instagram Video, Photos, DP, Stories, IGTV & Reels", anchor=CENTER, font=('', 20, 'bold'),)
+    des=ttk.Label(f1, background="#ECE5F0" , text="Download Instagram Video, Photos, DP, Stories, IGTV & Reels", anchor=CENTER, font=('', 15, 'bold'),)
     des.pack(fill='x', pady=130)
 
     fB3=('', 15, 'bold')
