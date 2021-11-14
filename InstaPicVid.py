@@ -16,7 +16,7 @@ def connect(host='http://google.com'):
 root = Tk()
 
 #Windows Title
-root.title("Instagram Images/Videos Downloader")
+root.title("InstaPicVid Downloader​")
 
 #windows width=800 and height=500 fixed
 root.geometry('800x500')
@@ -42,6 +42,7 @@ root.iconphoto(False, p1)
 #variables
 insta_Url= 'https://www.instagram.com/p/'
 insta_Url1='https://www.instagram.com/tv/'
+insta_ig='/?utm_source=ig_web_copy_link'
 insta_Id='https://www.instagram.com/'
 btColor= 'black'
 borderWidth='0'
@@ -55,6 +56,12 @@ cursor="hand2"
 
 #Function to download images and videos(Reels)
 def insta_pic_vid():
+
+    def short(u1):
+        char_to_replace = {str(insta_Url1): '', str(insta_ig): ''}
+        for key, value in char_to_replace.items():
+            u1 = u1.replace(key, value)
+        return u1
 
     def show1():
 
@@ -71,6 +78,10 @@ def insta_pic_vid():
                 elif insta_Url1==url[0:len(url) - 12]:
                     my_listbox.insert(END,"<< "+str(url))
                     shorted_url = url[29:len(url) - 1]
+
+                elif url.find(insta_ig) != -1:
+                    my_listbox.insert(END,"<< "+str(url))
+                    shorted_url = short(url)
                 
                 #save_metadata=true, then Instaloader function also download post description()
                 i = instaloader.Instaloader(save_metadata=False, post_metadata_txt_pattern='')
@@ -85,7 +96,7 @@ def insta_pic_vid():
             
             except Exception:
                 url=input_field.get()
-                if url == "" or insta_Url != url[0:len(url) - 12]:
+                if url == "":
                     tkinter.messagebox.showerror("Invalid Url","Input cannot be blanked and Inavid Url")
 
         else:
