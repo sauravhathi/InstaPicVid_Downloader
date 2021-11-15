@@ -5,8 +5,8 @@ import subprocess
 from tkinter import ttk
 import tkinter.messagebox
 import urllib.request
-from tkinter import WORD
 import webbrowser
+import os
 
 def connect(host='http://google.com'):
     try:
@@ -48,8 +48,8 @@ insta_ig='/?utm_source=ig_web_copy_link'
 insta_Id='https://www.instagram.com/'
 btColor= 'black'
 borderWidth='0'
-fontStyle=('', 10, 'bold')
-fontStyle1=('', 13, 'bold')
+fontStyle=('', 11, 'bold')
+fontStyle1=('', 15, 'bold')
 fontSmall= ('', 8)
 cursor="hand2"
 
@@ -59,9 +59,13 @@ cursor="hand2"
 #Function to download images and videos(Reels)
 def insta_pic_vid():
     def short(u1):
+
         char_to_replace = {str(insta_Url1): '', str(insta_ig): ''}
+
         for key, value in char_to_replace.items():
+
             u1 = u1.replace(key, value)
+
         return u1
 
     def show1():
@@ -71,18 +75,27 @@ def insta_pic_vid():
 
         if connect() == True:
             try:
-                url = input_field.get()
-                if insta_Url==url[0:len(url) - 12]:
-                    my_listbox.insert(END,"<< "+str(url))
+                
+                url = inUrl.get()
+
+                if url == '':
+                    raise Exception
+
+                elif insta_Url==url[0:len(url) - 12]:
                     shorted_url = url[28:len(url) - 1]
+                    my_listbox.insert(END,"<< "+str(shorted_url))
 
                 elif insta_Url1==url[0:len(url) - 12]:
-                    my_listbox.insert(END,"<< "+str(url))
                     shorted_url = url[29:len(url) - 1]
+                    my_listbox.insert(END,"<< "+str(shorted_url))
 
                 elif url.find(insta_ig) != -1:
-                    my_listbox.insert(END,"<< "+str(url))
                     shorted_url = short(url)
+                    my_listbox.insert(END,"<< "+str(shorted_url))
+
+                else:
+                    shorted_url=url
+                    my_listbox.insert(END,"<< "+str(shorted_url))
                 
                 #save_metadata=true, then Instaloader function also download post description()
                 i = instaloader.Instaloader(save_metadata=False, post_metadata_txt_pattern='')
@@ -96,9 +109,8 @@ def insta_pic_vid():
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
             
             except Exception:
-                url=input_field.get()
-                if url == "":
-                    tkinter.messagebox.showerror("Invalid Url","Input cannot be blanked and Inavid Url")
+
+                tkinter.messagebox.showerror("Invalid Url","Input cannot be blanked and Inavid Url")
 
         else:
             tkinter.messagebox.showerror("Connection Status", "No Internet!\nPlease Connect to Internet")
@@ -106,20 +118,19 @@ def insta_pic_vid():
     f2=Frame(bg="#ECE5F0")
     f2.place(x=0, y=0, width=800, height=500)
 
-    input_url = ttk.Label(f2, text="Enter Post Url:", background="#ECE5F0" ,  font=fontStyle)
-    input_url.pack(fill='x', padx=200)
+    input_url_label = ttk.Label(f2, text="Enter Post Url:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_label.pack(fill='x', padx=200)
 
-    input_field = ttk.Entry(f2, font=(20), width=70)
-    input_field.pack(padx=200)
+    inUrl = ttk.Entry(f2, font=(20), width=70)
+    inUrl.pack(padx=200, ipady=5)
 
+    b3 = Button(f2, text='Download', cursor=cursor, pady=5, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show1)
+    b3.pack(pady=10,padx=200, fill=X)
 
-    b3 = Button(f2, text='Download', cursor=cursor, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show1)
-    b3.pack(pady=10)
+    input_url_history = ttk.Label(f2, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_history.pack(fill='x', padx=200)
 
-    input_url = ttk.Label(f2, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
-    input_url.pack(fill='x', padx=200)
-
-    my_listbox = Listbox(f2, height=20, width=66)
+    my_listbox = Listbox(f2, height=18, width=66)
     my_listbox.pack()
 
     b4=Button(f2, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
@@ -131,7 +142,7 @@ def insta_profile_image():
     def show2():
         if connect() == True:
 
-            url1 = input_field1.get()
+            url1 = inUrl1.get()
 
             try:
 
@@ -145,7 +156,7 @@ def insta_profile_image():
 
                 else:
                     shorted_url1=url1
-                    my_listbox1.insert(END,"<< "+str(url1))
+                    my_listbox1.insert(END,"<< "+str(shorted_url1))
                 
 
                 #save_metadata=true, then Instaloader function also download post description()
@@ -167,21 +178,19 @@ def insta_profile_image():
     f3=Frame(bg="#ECE5F0")
     f3.place(x=0, y=0, width=800, height=500)
 
-    input_url = ttk.Label(f3, text="Enter Username:", background="#ECE5F0" ,  font=fontStyle)
-    input_url.pack(fill='x', padx=200)
+    input_url_label1 = ttk.Label(f3, text="Enter Username:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_label1.pack(fill='x', padx=200)
 
+    inUrl1 = ttk.Entry(f3, font=(20), width=70)
+    inUrl1.pack(padx=200, ipady=5)
 
-    input_field1 = ttk.Entry(f3, font=(20), width=70)
-    input_field1.pack(padx=200)
+    b5 = Button(f3, text='Download', cursor=cursor, pady=5, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show2)
+    b5.pack(pady=10,padx=200, fill=X)
 
+    input_url_history1 = ttk.Label(f3, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_history1.pack(fill='x', padx=200)
 
-    b5 = Button(f3, text='Download', cursor=cursor, relief="groove" , borderwidth=borderWidth, activebackground="blue", activeforeground="white", bg=btColor, fg='white', font=fontStyle1, command=show2)
-    b5.pack(pady=10)
-
-    input_url = ttk.Label(f3, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
-    input_url.pack(fill='x', padx=200)
-
-    my_listbox1 = Listbox(f3, height=20, width=66)
+    my_listbox1 = Listbox(f3, height=18, width=66)
     my_listbox1.pack()
 
     b6=Button(f3, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
@@ -197,17 +206,17 @@ def home():
 
     fB3=('', 15, 'bold')
 
-    b1=Button(f1, text="Photos", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
+    b1=Button(f1, text="Photos", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
     b1.place(x=125, y=160)
 
-    b2=Button(f1, text="Profile Picture", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
+    b2=Button(f1, text="Profile Picture", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
     b2.place(x=410, y=160)
 
     
-    b3=Button(f1, text="Videos", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
+    b3=Button(f1, text="Videos", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
     b3.place(x=125, y=260)
 
-    b4=Button(f1, text="Stories", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
+    b4=Button(f1, text="Stories", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
     b4.place(x=410, y=260)
 
     
