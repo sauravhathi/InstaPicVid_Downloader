@@ -5,6 +5,8 @@ import subprocess
 from tkinter import ttk
 import tkinter.messagebox
 import urllib.request
+from tkinter import WORD
+import webbrowser
 
 def connect(host='http://google.com'):
     try:
@@ -56,7 +58,6 @@ cursor="hand2"
 
 #Function to download images and videos(Reels)
 def insta_pic_vid():
-
     def short(u1):
         char_to_replace = {str(insta_Url1): '', str(insta_ig): ''}
         for key, value in char_to_replace.items():
@@ -191,23 +192,37 @@ def home():
     f1=Frame(bg="#ECE5F0")
     f1.place(width=800, height=500)
 
-    des=ttk.Label(f1, background="#ECE5F0" , text="Download Instagram Video, Photos, DP, Stories, IGTV & Reels", anchor=CENTER, font=('', 15, 'bold'),)
-    des.pack(fill='x', pady=130)
+    des=ttk.Label(f1, background="#ECE5F0" , text="Download Instagram Video, Photos, DP, Stories, IGTV & Reels", anchor=CENTER, font=('Arial Bold', 18))
+    des.pack(fill='x', pady=(80,0))
 
     fB3=('', 15, 'bold')
 
-    b1=Button(f1, text="Picture & Video", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
-    b1.place(x=125, y=200)
+    b1=Button(f1, text="Photos", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
+    b1.place(x=125, y=160)
 
     b2=Button(f1, text="Profile Picture", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
-    b2.place(x=410, y=200)
+    b2.place(x=410, y=160)
+
+    
+    b3=Button(f1, text="Videos", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
+    b3.place(x=125, y=260)
+
+    b4=Button(f1, text="Stories", cursor=cursor, width=20, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
+    b4.place(x=410, y=260)
+
+    
+    def callback(event):
+        webbrowser.open_new_tab(event)
+
+    lbl = Label(f1, text="Github",background="#ECE5F0", fg='red', highlightthickness=2,highlightbackground = "red", font=('', 20, 'bold'), cursor=cursor)
+    lbl.place(x=340, y=380)
+    lbl.bind("<Button>", lambda e: callback("https://github.com/sauravhathi"))
 
     version=ttk.Label(f1, text="Version: 1.0.0", background="#ECE5F0" ,  font=fontSmall)
     version.pack(anchor = "s", side = "left")
 
     qut=ttk.Label(f1, text="Download Instagram Video, Photos, DP, Stories, IGTV & Reels", background="#ECE5F0" , anchor=CENTER, font=fontSmall)
     qut.pack(anchor = "s", side = "right")
-
 
 #home function call
 home()
