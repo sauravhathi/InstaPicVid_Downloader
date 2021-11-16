@@ -119,8 +119,8 @@ def insta_pic_vid():
     f2=Frame(bg="#ECE5F0")
     f2.place(x=0, y=0, width=800, height=500)
 
-    input_url_label = ttk.Label(f2, text="Enter Post Url:", background="#ECE5F0" ,  font=fontStyle)
-    input_url_label.pack(fill='x', padx=200)
+    input_url_label = ttk.Label(f2, text="Enter Post Link: ", background="#ECE5F0" ,  font=fontStyle)
+    input_url_label.pack(fill='x', padx=200, pady=(20,5))
 
     inUrl = ttk.Entry(f2, font=(20), width=70)
     inUrl.pack(padx=200, ipady=5)
@@ -128,14 +128,22 @@ def insta_pic_vid():
     b3 = Button(f2, text='Download', cursor=cursor, pady=5, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show1)
     b3.pack(pady=10,padx=200, fill=X)
 
-    input_url_history = ttk.Label(f2, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
-    input_url_history.pack(fill='x', padx=200)
+    input_url_history = ttk.Label(f2, text="Post Link History:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_history.pack(fill='x', padx=200, pady=(20,0))
 
-    my_listbox = Listbox(f2, height=18, width=66)
+    my_listbox = Listbox(f2, height=10, width=66)
     my_listbox.pack()
 
+    label2 = Label(f2, text="Instruction: ", font=fontStyle, bd=5, fg="black", bg="#ECE5F0")
+    label2.place(x=200, y=370)
+
+    TEXT = "1. Copy Instagram Post Link and paste in the input field\n2. Download Photos, Video, Reels and IGTV"
+
+    label2 = Label(f2, text=TEXT, font=('', 10), bd=5, fg="#cd486b", justify=LEFT, bg="#ECE5F0")
+    label2.place(x=200, y=400)
+
     b4=Button(f2, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
-    b4.pack(side=RIGHT, padx=20)
+    b4.pack(anchor = "s", side = "right", padx=(0,20), pady=(0,15))
     
 #Function to download unsta user's profile picture
 def insta_profile_image():
@@ -161,7 +169,7 @@ def insta_profile_image():
                 
 
                 #save_metadata=true, then Instaloader function also download post description()
-                j = instaloader.Instaloader(save_metadata=False, post_metadata_txt_pattern='')
+                j = instaloader.Instaloader(save_metadata=False)
                 j.download_profile(shorted_url1, profile_pic_only=True)
 
                 #open downloaded path
@@ -180,7 +188,7 @@ def insta_profile_image():
     f3.place(x=0, y=0, width=800, height=500)
 
     input_url_label1 = ttk.Label(f3, text="Enter Username:", background="#ECE5F0" ,  font=fontStyle)
-    input_url_label1.pack(fill='x', padx=200)
+    input_url_label1.pack(fill='x', padx=200, pady=(20,5))
 
     inUrl1 = ttk.Entry(f3, font=(20), width=70)
     inUrl1.pack(padx=200, ipady=5)
@@ -188,15 +196,104 @@ def insta_profile_image():
     b5 = Button(f3, text='Download', cursor=cursor, pady=5, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show2)
     b5.pack(pady=10,padx=200, fill=X)
 
-    input_url_history1 = ttk.Label(f3, text="Url History:", background="#ECE5F0" ,  font=fontStyle)
-    input_url_history1.pack(fill='x', padx=200)
+    input_url_history1 = ttk.Label(f3, text="Username History:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_history1.pack(fill='x', padx=200, pady=(20,0))
 
-    my_listbox1 = Listbox(f3, height=18, width=66)
+    my_listbox1 = Listbox(f3, height=10, width=66)
     my_listbox1.pack()
 
-    b6=Button(f3, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
-    b6.pack(side=RIGHT, padx=20)
+    instruction = Label(f3, text="Instruction: ", font=fontStyle, bd=5, fg="black", bg="#ECE5F0")
+    instruction.place(x=200, y=370)
 
+    TEXT = "1. You just any Public Instagram account profile URL\n    or Link Address in the input field\n2. Download Profile Picture or DP"
+
+    instruction_Con = Label(f3, text=TEXT, font=('', 10), bd=5, fg="#cd486b", justify=LEFT, bg="#ECE5F0")
+    instruction_Con.place(x=200, y=400)
+
+    b6=Button(f3, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
+    b6.pack(anchor = "s", side = "right", padx=(0,20), pady=(0,15))
+
+def insta_stories():
+
+    def show3():
+        USERNAME=username_inUrl2.get()
+        PASSWORD=password_inUrl2.get()
+        TARGET="stories"
+
+        if connect() == True:
+
+            url2 = inUrl2.get()
+
+            try:
+
+                if USERNAME=="" and PASSWORD=="" and url2=="" :
+                    raise Exception
+
+                elif len(url2) > 26 and url2.find(insta_Id, 0, 26) == 0:
+                    temp=url2.replace(insta_Id,"")
+                    shorted_url2=temp[0:-1]
+                    my_listbox2.insert(END,"<< "+str(shorted_url2))
+
+                else:
+                    shorted_url2=url2
+                    my_listbox2.insert(END,"<< "+str(shorted_url2))
+
+                s = instaloader.Instaloader(save_metadata=False)
+                s.login(USERNAME, PASSWORD)
+                profile = s.check_profile_id(shorted_url2)
+                #save_metadata=true, then Instaloader function also download post description()
+                for story in s.get_stories(userids=str(profile.userid)):
+                    for item in story.get_items():
+                        s.download_storyitem(item, TARGET)
+                #open downloaded path
+                subprocess.Popen('explorer "{0}"'.format(TARGET))
+                
+                # tru()
+                tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
+            
+            except Exception:
+                tkinter.messagebox.showerror("Blanked","Input cannot be blanked and Inavid Url")
+
+        else:
+            tkinter.messagebox.showerror("Connection Status", "No Internet!\nPlease Connect to Internet")
+
+    f4=Frame(bg="#ECE5F0")
+    f4.place(x=0, y=0, width=800, height=500)
+
+    username = ttk.Label(f4, text="Username:", background="#ECE5F0" ,  font=fontStyle)
+    username.pack(fill='x', padx=200, pady=(10,5))
+    username_inUrl2 = ttk.Entry(f4, font=(20), width=70)
+    username_inUrl2.pack(padx=200, ipady=5)
+
+    password = ttk.Label(f4, text="Password:", background="#ECE5F0" ,  font=fontStyle)
+    password.pack(fill='x', padx=200, pady=(5,5))
+    password_inUrl2 = ttk.Entry(f4, font=(20), width=70)
+    password_inUrl2.pack(padx=200, ipady=5)
+
+    input_url_label4 = ttk.Label(f4, text="Profile Username:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_label4.pack(fill='x', padx=200, pady=(5,5))
+    inUrl2 = ttk.Entry(f4, font=(20), width=70)
+    inUrl2.pack(padx=200, ipady=5)
+
+    b6 = Button(f4, text='Download', cursor=cursor, pady=5, borderwidth=borderWidth, relief="groove" , activebackground="blue", activeforeground="white",bg=btColor, fg='white', font=fontStyle1, command=show3)
+    b6.pack(pady=10,padx=200, fill=X)
+
+    input_url_history2 = ttk.Label(f4, text="Stories History:", background="#ECE5F0" ,  font=fontStyle)
+    input_url_history2.pack(fill='x', padx=200)
+
+    my_listbox2 = Listbox(f4, height=5, width=66)
+    my_listbox2.pack()
+
+    instruction = Label(f4, text="Instruction: ", font=fontStyle, bd=5, fg="black", bg="#ECE5F0")
+    instruction.place(x=200, y=380)
+
+    TEXT = "1. Enter USERNAME, PASSWORD and Public Instagram\n   account profile URL or Link Address\n2. Download any public profile Stories"
+
+    instruction_Con = Label(f4, text=TEXT, font=('', 10), bd=5, fg="#cd486b", justify=LEFT, bg="#ECE5F0")
+    instruction_Con.place(x=200, y=420)
+
+    b7=Button(f4, text="Back", cursor=cursor, borderwidth=borderWidth, bg=btColor, activebackground="blue", activeforeground="white", fg='white', font=fontStyle1, command=home)
+    b7.pack(anchor = "s", side = "right", padx=(0,20), pady=(0,15))
 #Home Page Function
 def home():
     f1=Frame(bg="#ECE5F0")
@@ -212,7 +309,7 @@ def home():
     
     b3=Button(f1, text="Videos", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_pic_vid)
 
-    b4=Button(f1, text="Stories", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_profile_image)
+    b4=Button(f1, text="Stories", cursor=cursor, width=20, pady=10, bg=btColor, activebackground="blue", activeforeground="white", borderwidth=borderWidth, fg='white', font=fB3, command=insta_stories)
 
     lbl = Label(f1, text="Github",background="#ECE5F0", fg='red', highlightthickness=2,highlightbackground = "red", font=('', 20, 'bold'), cursor=cursor)
     lbl.bind("<Button>", lambda e: callback("https://github.com/sauravhathi"))
