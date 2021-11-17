@@ -1,3 +1,4 @@
+from ssl import Purpose
 import instaloader
 from instaloader import Post
 from tkinter import *
@@ -6,6 +7,17 @@ from tkinter import ttk
 import tkinter.messagebox
 import urllib.request
 import webbrowser
+
+
+# Testing Purpose links
+
+# https://www.instagram.com/gal_gadot/
+# https://www.instagram.com/bollywoodbinge/
+# https://www.instagram.com/reel/CWQQoTaJnhS/?utm_source=ig_web_copy_link
+# https://www.instagram.com/tv/CWVlkM9tGvi/?utm_source=ig_web_copy_link
+# https://www.instagram.com/p/CWVAGDuphAJ/?utm_source=ig_web_copy_link
+# https://www.instagram.com/p/CWPy0FyqKir/?utm_source=ig_web_copy_link
+
 
 root = Tk()
 
@@ -24,20 +36,12 @@ p1 = PhotoImage(file = 'instagram_icon.png')
 # Setting icon of master window
 root.iconphoto(False, p1)
 
-
-# def tru():
-#     directory = "./download_post"
-#     files_in_directory = os.listdir(directory)
-#     filtered_files = [file for file in files_in_directory if file.endswith((".txt", ".xz"))]
-#     for file in filtered_files:
-#         path_to_file = os.path.join(directory, file)
-#         os.remove(path_to_file)
-
 #variables
 insta_Url= 'https://www.instagram.com/p/'
 insta_Url1='https://www.instagram.com/tv/'
+insta_Url_reel='https://www.instagram.com/reel/'
 insta_ig='/?utm_source=ig_web_copy_link'
-insta_Id='https://www.instagram.com/'
+insta_Id=insta_Url[0:len(insta_Url)-2]
 btColor= 'black'
 borderWidth='0'
 fontStyle=('', 11, 'bold')
@@ -48,7 +52,7 @@ cursor="hand2"
 #Checking internet connection status
 def connect(host='http://google.com'):
     try:
-        urllib.request.urlopen(host) #Python 3.x
+        urllib.request.urlopen(host)
         return True
     except:
         return False
@@ -61,7 +65,7 @@ def callback(event):
 def insta_pic_vid():
     def short(u1):
 
-        char_to_replace = {str(insta_Url1): '', str(insta_ig): ''}
+        char_to_replace = {str(insta_Url_reel): '',str(insta_Url): '',str(insta_Url1): '', str(insta_ig): ''}
 
         for key, value in char_to_replace.items():
 
@@ -82,8 +86,18 @@ def insta_pic_vid():
                 if url == '':
                     raise Exception
 
-                elif insta_Url==url[0:len(url) - 12]:
-                    shorted_url = url[28:len(url) - 1]
+                elif url.find(insta_ig) != -1:
+                    shorted_url = short(url)
+                    print("first")
+                    my_listbox.insert(END,"<< "+str(shorted_url))
+
+                elif url.find(insta_Url) != -1:
+                    shorted_url = url[28:len(url)-1]
+                    print("2nd")
+                    my_listbox.insert(END,"<< "+str(shorted_url))
+                
+                elif url.find(insta_Url_reel) != -1:
+                    shorted_url = url[31:len(url)-1]
                     my_listbox.insert(END,"<< "+str(shorted_url))
 
                 elif insta_Url1==url[0:len(url) - 12]:
@@ -105,7 +119,6 @@ def insta_pic_vid():
 
                 #open downloaded path
                 subprocess.Popen('explorer "{0}"'.format(target))
-                # tru()
 
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
             
@@ -160,20 +173,20 @@ def insta_profile_image():
 
                 elif len(url1) > 26 and url1.find(insta_Id, 0, 26) == 0:
                     temp=url1.replace(insta_Id,"")
-                    shorted_url1=temp[0:-1]
-                    my_listbox1.insert(END,"<< "+str(shorted_url1))
+                    shorted_url=temp[0:-1]
+                    my_listbox1.insert(END,"<< "+str(shorted_url))
 
                 else:
-                    shorted_url1=url1
-                    my_listbox1.insert(END,"<< "+str(shorted_url1))
+                    shorted_url=url1
+                    my_listbox1.insert(END,"<< "+str(shorted_url))
                 
 
                 #save_metadata=true, then Instaloader function also download post description()
                 j = instaloader.Instaloader(save_metadata=False)
-                j.download_profile(shorted_url1, profile_pic_only=True)
+                j.download_profile(shorted_url, profile_pic_only=True)
 
                 #open downloaded path
-                subprocess.Popen('explorer "{0}"'.format(shorted_url1))
+                subprocess.Popen('explorer "{0}"'.format(shorted_url))
                 
                 # tru()
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
@@ -231,16 +244,16 @@ def insta_stories():
 
                 elif len(url2) > 26 and url2.find(insta_Id, 0, 26) == 0:
                     temp=url2.replace(insta_Id,"")
-                    shorted_url2=temp[0:-1]
-                    my_listbox2.insert(END,"<< "+str(shorted_url2))
+                    shorted_url=temp[0:-1]
+                    my_listbox2.insert(END,"<< "+str(shorted_url))
 
                 else:
-                    shorted_url2=url2
-                    my_listbox2.insert(END,"<< "+str(shorted_url2))
+                    shorted_url=url2
+                    my_listbox2.insert(END,"<< "+str(shorted_url))
 
                 s = instaloader.Instaloader(save_metadata=False)
                 s.login(USERNAME, PASSWORD)
-                profile = s.check_profile_id(shorted_url2)
+                profile = s.check_profile_id(shorted_url)
                 #save_metadata=true, then Instaloader function also download post description()
                 for story in s.get_stories(userids=str(profile.userid)):
                     for item in story.get_items():
