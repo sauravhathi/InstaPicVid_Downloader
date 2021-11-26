@@ -88,12 +88,10 @@ def insta_pic_vid():
 
                 elif url.find(insta_ig) != -1:
                     shorted_url = short(url)
-                    print("first")
                     my_listbox.insert(END,"<< "+str(shorted_url))
 
                 elif url.find(insta_Url) != -1:
                     shorted_url = url[28:len(url)-1]
-                    print("2nd")
                     my_listbox.insert(END,"<< "+str(shorted_url))
                 
                 elif url.find(insta_Url_reel) != -1:
@@ -124,7 +122,7 @@ def insta_pic_vid():
             
             except Exception:
 
-                tkinter.messagebox.showerror("Invalid Url","Input cannot be blanked and Inavid Url")
+                tkinter.messagebox.showerror("Invalid Url","Input cannot be blank and Inavid Url")
 
         else:
             tkinter.messagebox.showerror("Connection Status", "No Internet!\nPlease Connect to Internet")
@@ -162,6 +160,7 @@ def insta_pic_vid():
 def insta_profile_image():
 
     def show2():
+        target= 'stories'
         if connect() == True:
 
             url1 = inUrl1.get()
@@ -186,7 +185,7 @@ def insta_profile_image():
                 j.download_profile(shorted_url, profile_pic_only=True)
 
                 #open downloaded path
-                subprocess.Popen('explorer "{0}"'.format(shorted_url))
+                subprocess.Popen('explorer "{0}"'.format(target))
                 
                 # tru()
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
