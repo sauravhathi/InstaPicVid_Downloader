@@ -160,7 +160,6 @@ def insta_pic_vid():
 def insta_profile_image():
 
     def show2():
-        target= 'stories'
         if connect() == True:
 
             url1 = inUrl1.get()
@@ -185,7 +184,7 @@ def insta_profile_image():
                 j.download_profile(shorted_url, profile_pic_only=True)
 
                 #open downloaded path
-                subprocess.Popen('explorer "{0}"'.format(target))
+                subprocess.Popen('explorer "{0}"'.format(shorted_url))
                 
                 # tru()
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
@@ -230,7 +229,6 @@ def insta_stories():
     def show3():
         USERNAME=username_inUrl2.get()
         PASSWORD=password_inUrl2.get()
-        TARGET="stories"
 
         if connect() == True:
 
@@ -256,9 +254,9 @@ def insta_stories():
                 #save_metadata=true, then Instaloader function also download post description()
                 for story in s.get_stories(userids=str(profile.userid)):
                     for item in story.get_items():
-                        s.download_storyitem(item, TARGET)
+                        s.download_storyitem(item, shorted_url)
                 #open downloaded path
-                subprocess.Popen('explorer "{0}"'.format(TARGET))
+                subprocess.Popen('explorer "{0}"'.format(shorted_url))
                 
                 # tru()
                 tkinter.messagebox.showinfo("Downloading", "Downloading Successful")
