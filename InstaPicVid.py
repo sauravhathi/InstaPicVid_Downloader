@@ -1,4 +1,4 @@
-from ssl import Purpose
+# from ssl import Purpose
 import instaloader
 from instaloader import Post
 from tkinter import *
