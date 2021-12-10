@@ -5,7 +5,7 @@ run the following command
 
 
 ```bash
-  pip install instaloader tkinter subprocess webbrowser urllib.request
+  pip install instaloader tk subprocess.run urllib3
   git clone https://github.com/sauravhathi/InstaPicVid_Downloader.git
 ```
 
@@ -20,18 +20,14 @@ OR
 ```
 
 ```bash
-  pip install tkinter
+  pip install tk
 ```
 
 ```bash
-  pip install subprocess
+  pip install subprocess.run
 ```
 
 ```bash
-  pip install webbrowser
-```
-
-```bash
-  pip install urllib.request
+  pip install urllib3
 ```
 
