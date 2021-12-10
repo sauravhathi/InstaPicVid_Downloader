@@ -3,6 +3,7 @@
 
 run the following command
 
+
 ```bash
   git clone https://github.com/sauravhathi/InstaPicVid_Downloader.git
 ```
@@ -13,4 +14,23 @@ OR
   gh repo clone sauravhathi/InstaPicVid_Downloader
 ```
 
+```bash
+  pip install instaloader
+```
+
+```bash
+  pip install tkinter
+```
+
+```bash
+  pip install subprocess
+```
+
+```bash
+  pip install webbrowser
+```
+
+```bash
+  pip install urllib.request
+```
 
