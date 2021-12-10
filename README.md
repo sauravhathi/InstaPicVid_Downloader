@@ -5,6 +5,7 @@ run the following command
 
 
 ```bash
+  pip install instaloader tkinter subprocess webbrowser urllib.request
   git clone https://github.com/sauravhathi/InstaPicVid_Downloader.git
 ```
 
